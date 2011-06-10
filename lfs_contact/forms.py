@@ -2,6 +2,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+
 class ContactForm(forms.Form):
     """Simple contact form for LFS.
     """
