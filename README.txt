@@ -1,4 +1,4 @@
 What is it?
 ===========
 
-LFS Contact is a simple contact form for LFS
+LFS Contact is a simple contact form for LFS.
