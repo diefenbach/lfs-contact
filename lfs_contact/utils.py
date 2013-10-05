@@ -17,6 +17,8 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
     """
     shop = lfs.core.utils.get_default_shop()
     subject = form.cleaned_data.get('subject', '').strip()
+    if not subject:
+        subject = _('New message')
     subject = _(u"[%(shop)s contact form] %(subject)s" % {"shop": shop.name, "subject": subject})
     from_email = request.POST.get("email")
     to = shop.get_notification_emails()
@@ -24,6 +26,8 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
 
     fields = []
     for field_name, field in form.fields.items():
+        if field_name == 'subject':
+            continue
         fields.append({
             "label": _(field.label.title()),
             "value": form.cleaned_data.get(field_name)

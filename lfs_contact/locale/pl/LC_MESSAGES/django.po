@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lfs_contact\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-05 17:25+0200\n"
-"PO-Revision-Date: 2013-10-05 17:26+0100\n"
+"POT-Creation-Date: 2013-10-05 18:02+0200\n"
+"PO-Revision-Date: 2013-10-05 18:02+0100\n"
 "Last-Translator: Maciej Wiśniowski <pigletto@gmail.com>\n"
 "Language-Team: natcam.pl <hello@natcam.pl>\n"
 "Language: \n"
@@ -20,23 +20,27 @@ msgstr ""
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: forms.py:9
+#: forms.py:10
 msgid "Name"
 msgstr "Nazwa"
 
-#: forms.py:10
+#: forms.py:11
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: forms.py:11
+#: forms.py:12
 msgid "Subject"
 msgstr "Temat"
 
-#: forms.py:12
+#: forms.py:13
 msgid "Message"
 msgstr "Wiadomość"
 
-#: utils.py:20
+#: utils.py:21
+msgid "New message"
+msgstr "Nowa wiadomość"
+
+#: utils.py:22
 #, python-format
 msgid "[%(shop)s contact form] %(subject)s"
 msgstr "[Formularz kontaktowy %(shop)s] %(subject)s"
