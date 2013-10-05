@@ -19,7 +19,7 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
     subject = form.cleaned_data.get('subject', '').strip()
     if not subject:
         subject = _('New message')
-    subject = _(u"[%(shop)s contact form] %(subject)s" % {"shop": shop.name, "subject": subject})
+    subject = _(u"[%(shop)s contact form] %(subject)s") % {"shop": shop.name, "subject": subject}
     from_email = request.POST.get("email")
     to = shop.get_notification_emails()
     bcc = []
