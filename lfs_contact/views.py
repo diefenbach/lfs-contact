@@ -3,8 +3,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 # lfs imports
+from lfs.catalog.models import Product
 import lfs.customer.utils
 from lfs_contact.forms import ContactForm
 from lfs_contact.utils import send_contact_mail
@@ -20,7 +22,8 @@ def contact_form(request, template_name="lfs/contact/contact_form.html"):
             return HttpResponseRedirect(reverse("lfs_contact_form_sent"))
     else:
         customer = lfs.customer.utils.get_customer(request)
-
+        product_id = request.REQUEST.get('product_id', None)
+        subject = ''
         try:
             name = customer.address.firstname + " " + customer.address.lastname
             email = customer.address.email
@@ -28,7 +31,19 @@ def contact_form(request, template_name="lfs/contact/contact_form.html"):
             name = ""
             email = ""
 
-        form = ContactForm(initial={"name": name, "email": email})
+        if product_id:
+            try:
+                product = Product.objects.get(pk=product_id, active=True)
+            except Product.DoesNotExist:
+                pass
+            else:
+                sku = product.get_sku()
+                if sku:
+                    sku = ' (%s)' % sku
+                subject = _('Availability of \'%(product_name)s\'%(sku)s') % dict(product_name=product.get_name(),
+                                                                                  sku=sku)
+
+        form = ContactForm(initial={"name": name, "email": email, 'subject': subject})
 
     return render_to_response(template_name, RequestContext(request, {
         "form": form,
