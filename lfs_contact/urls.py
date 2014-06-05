@@ -1,5 +1,5 @@
 # django imports
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns('lfs_contact.views',
     url(r'^contact$', "contact_form", name='lfs_contact_form'),
