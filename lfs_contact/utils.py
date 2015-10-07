@@ -39,7 +39,20 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
         "fields": fields,
     }))
 
-    mail = EmailMultiAlternatives(subject=subject, body="", from_email=from_email, to=to, bcc=bcc)
+    # Add Sender header, because eg. Gmail don't like From header set to @gmail
+    # but email not really sent by gmail servers.
+    # If email is sent From: @gmail.com it generates the following message in our postfix
+    # host gmail-smtp-in.l.google.com[74.125.136.26] said: 421-4.7.0 [xx.xx.xx.xx 15]
+    # Our system has detected an unusual rate of 421-4.7.0 unsolicited mail
+    # originating from your IP address. To protect our 421-4.7.0 users from
+    # spam, mail sent from your IP address has been temporarily 421-4.7.0 rate
+    # limited. Please visit 421-4.7.0 http://www.google.com/mail/help/bulk_mail.html
+    # to review our Bulk 421 4.7.0 Email Senders Guidelines.
+    headers = {
+        'Sender': shop.from_email
+    }
+
+    mail = EmailMultiAlternatives(subject=subject, body="", from_email=from_email, to=to, bcc=bcc, headers=headers)
     mail.attach_alternative(text, "text/html")
 
     mail.send()
