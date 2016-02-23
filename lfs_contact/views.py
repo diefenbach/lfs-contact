@@ -2,19 +2,21 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.conf import settings
 from django.core.urlresolvers import reverse
 
 # lfs imports
 import lfs.customer.utils
-from lfs_contact.forms import ContactForm
 from lfs_contact.utils import send_contact_mail
+from lfs.core.utils import import_symbol
 
 
 def contact_form(request, template_name="lfs/contact/contact_form.html"):
     """Displays the contact form of LFS.
     """
+    contact_form = import_symbol(getattr(settings, "LFS_CONTACT_FORM", "lfs_contact.forms.ContactForm"))
     if request.method == 'POST':
-        form = ContactForm(data=request.POST)
+        form = contact_form(data=request.POST, files=request.FILES)
         if form.is_valid():
             send_contact_mail(request, form)
             return HttpResponseRedirect(reverse("lfs_contact_form_sent"))
@@ -28,7 +30,7 @@ def contact_form(request, template_name="lfs/contact/contact_form.html"):
             name = ""
             email = ""
 
-        form = ContactForm(initial={"name": name, "email": email})
+        form = contact_form(initial={"name": name, "email": email})
 
     return render_to_response(template_name, RequestContext(request, {
         "form": form,
