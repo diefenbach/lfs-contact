@@ -1,7 +1,7 @@
-# django imports
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+import views
 
-urlpatterns = patterns('lfs_contact.views',
-    url(r'^contact$', "contact_form", name='lfs_contact_form'),
-    url(r'^contact-form-sent/$', "contact_form_sent", name='lfs_contact_form_sent'),
-)
+urlpatterns = [
+    url(r'^contact/$', views.contact_form, name='lfs_contact_form'),
+    url(r'^contact-form-sent/$', views.contact_form_sent, name='lfs_contact_form_sent'),
+]

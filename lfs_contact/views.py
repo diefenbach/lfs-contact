@@ -1,10 +1,7 @@
-# django imports
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
-# lfs imports
 import lfs.customer.utils
 from lfs_contact.forms import ContactForm
 from lfs_contact.utils import send_contact_mail
@@ -30,12 +27,12 @@ def contact_form(request, template_name="lfs/contact/contact_form.html"):
 
         form = ContactForm(initial={"name": name, "email": email})
 
-    return render_to_response(template_name, RequestContext(request, {
+    return render(request, template_name, {
         "form": form,
-    }))
+    })
 
 
 def contact_form_sent(request, template_name="lfs/contact/contact_form_sent.html"):
     """Displays the page after the the contact form has been sent.
     """
-    return render_to_response(template_name, RequestContext(request, {}))
+    return render(request, template_name, {})
