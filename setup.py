@@ -1,8 +1,8 @@
-from setuptools import setup, find_packages
 import os
+from setuptools import setup, find_packages
+from lfs_contact import __version__
 
-version = 'dev'
-
+version = __version__
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.txt')).read()
 
@@ -27,6 +27,6 @@ setup(name='lfs-contact',
       zip_safe=False,
       dependency_links=["http://pypi.iqpp.de/"],
       install_requires=[
-        'setuptools',
+          'setuptools',
       ],
       )
