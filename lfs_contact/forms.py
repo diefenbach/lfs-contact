@@ -1,4 +1,3 @@
-# django imports
 from django import forms
 from django.forms import HiddenInput
 from django.utils.translation import ugettext_lazy as _
