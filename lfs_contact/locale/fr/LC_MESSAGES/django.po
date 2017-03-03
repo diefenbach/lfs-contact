@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: LFS Contact\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-05 18:02+0200\n"
+"PO-Revision-Date: 2013-10-05 18:02+0100\n"
+"Last-Translator: Maciej Wiśniowski <pigletto@gmail.com>\n"
+"Language-Team: natcam <hello@natcam.pl>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: forms.py:10
+msgid "Name"
+msgstr "Nom"
+
+#: forms.py:11
+msgid "E-Mail"
+msgstr ""
+
+#: forms.py:12
+msgid "Subject"
+msgstr "Sujet"
+
+#: forms.py:13
+msgid "Message"
+msgstr "Un message"
+
+#: utils.py:21
+msgid "New message"
+msgstr "Nouveau message"
+
+#: utils.py:22
+#, python-format
+msgid "[%(shop)s contact form] %(subject)s"
+msgstr "[Formulaire de contact de %(shop)s] %(subject)s"
+
+#: views.py:43
+#, python-format
+msgid "Availability of '%(product_name)s'%(sku)s"
+msgstr "Disponibilité de '%(product_name)s'%(sku)s"
+
