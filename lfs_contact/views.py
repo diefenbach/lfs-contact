@@ -19,7 +19,7 @@ def contact_form(request, template_name="lfs/contact/contact_form.html"):
             return HttpResponseRedirect(reverse("lfs_contact_form_sent"))
     else:
         customer = lfs.customer.utils.get_customer(request)
-        product_id = request.REQUEST.get('product_id', None)
+        product_id = request.GET.get('product_id', None)
         subject = ''
         try:
             name = customer.address.firstname + " " + customer.address.lastname
