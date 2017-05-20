@@ -9,11 +9,11 @@ from lfs_contact.forms import ContactForm
 from lfs_contact.utils import send_contact_mail
 
 
-def contact_form(request, template_name="lfs/contact/contact_form.html"):
+def contact_form(request, contact_form=ContactForm, template_name="lfs/contact/contact_form.html"):
     """Displays the contact form of LFS.
     """
     if request.method == 'POST':
-        form = ContactForm(data=request.POST)
+        form = contact_form(data=request.POST)
         if form.is_valid():
             send_contact_mail(request, form)
             return HttpResponseRedirect(reverse("lfs_contact_form_sent"))
@@ -40,7 +40,7 @@ def contact_form(request, template_name="lfs/contact/contact_form.html"):
                 subject = _('Availability of \'%(product_name)s\'%(sku)s') % dict(product_name=product.get_name(),
                                                                                   sku=sku)
 
-        form = ContactForm(initial={"name": name, "email": email, 'subject': subject})
+        form = contact_form(initial={"name": name, "email": email, 'subject': subject})
 
     return render(request, template_name, {
         "form": form,
