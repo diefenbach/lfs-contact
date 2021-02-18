@@ -4,7 +4,6 @@ import datetime
 # django imports
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.template import RequestContext
 from django.utils.translation import ugettext as _
 
 # lfs imports
@@ -33,11 +32,11 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
             "value": form.cleaned_data.get(field_name)
         })
 
-    text = render_to_string(template, RequestContext(request, {
+    text = render_to_string(template, {
         "date": datetime.datetime.now(),
         "shop": shop,
         "fields": fields,
-    }))
+    })
 
     # Add Sender header, because eg. Gmail don't like From header set to @gmail
     # but email not really sent by gmail servers.
