@@ -25,7 +25,7 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
 
     fields = []
     for field_name, field in form.fields.items():
-        if field_name == 'subject':
+        if field_name in ['subject', 'captcha']:
             continue
         fields.append({
             "label": _(field.label.title()),
