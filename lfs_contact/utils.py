@@ -1,12 +1,9 @@
-# python imports
 import datetime
 
-# django imports
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-# lfs imports
 import lfs.core.utils
 
 
@@ -15,28 +12,28 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
     form.
     """
     shop = lfs.core.utils.get_default_shop()
-    subject = form.cleaned_data.get('subject', '').strip()
+    subject = form.cleaned_data.get("subject", "").strip()
     if not subject:
-        subject = _('New message')
-    subject = _(u"[%(shop)s contact form] %(subject)s") % {"shop": shop.name, "subject": subject}
+        subject = _("New message")
+    subject = _("[%(shop)s contact form] %(subject)s") % {"shop": shop.name, "subject": subject}
     from_email = request.POST.get("email")
     to = shop.get_notification_emails()
     bcc = []
 
     fields = []
     for field_name, field in form.fields.items():
-        if field_name in ['subject', 'captcha']:
+        if field_name in ["subject", "captcha"]:
             continue
-        fields.append({
-            "label": _(field.label.title()),
-            "value": form.cleaned_data.get(field_name)
-        })
+        fields.append({"label": _(field.label.title()), "value": form.cleaned_data.get(field_name)})
 
-    text = render_to_string(template, {
-        "date": datetime.datetime.now(),
-        "shop": shop,
-        "fields": fields,
-    })
+    text = render_to_string(
+        template,
+        {
+            "date": datetime.datetime.now(),
+            "shop": shop,
+            "fields": fields,
+        },
+    )
 
     # Add Sender header, because eg. Gmail don't like From header set to @gmail
     # but email not really sent by gmail servers.
@@ -47,9 +44,7 @@ def send_contact_mail(request, form, template="lfs/mail/contact_mail.html"):
     # spam, mail sent from your IP address has been temporarily 421-4.7.0 rate
     # limited. Please visit 421-4.7.0 http://www.google.com/mail/help/bulk_mail.html
     # to review our Bulk 421 4.7.0 Email Senders Guidelines.
-    headers = {
-        'Sender': shop.from_email
-    }
+    headers = {"Sender": shop.from_email}
 
     mail = EmailMultiAlternatives(subject=subject, body="", from_email=from_email, to=to, bcc=bcc, headers=headers)
     mail.attach_alternative(text, "text/html")

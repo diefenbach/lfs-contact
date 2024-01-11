@@ -10,17 +10,16 @@ from lfs_contact.utils import send_contact_mail
 
 
 def contact_form(request, contact_form=ContactForm, template_name="lfs/contact/contact_form.html"):
-    """Displays the contact form of LFS.
-    """
-    if request.method == 'POST':
+    """Displays the contact form of LFS."""
+    if request.method == "POST":
         form = contact_form(data=request.POST)
         if form.is_valid():
             send_contact_mail(request, form)
             return HttpResponseRedirect(reverse("lfs_contact_form_sent"))
     else:
         customer = lfs.customer.utils.get_customer(request)
-        product_id = request.GET.get('product_id', None)
-        subject = ''
+        product_id = request.GET.get("product_id", None)
+        subject = ""
         try:
             name = customer.address.firstname + " " + customer.address.lastname
             email = customer.address.email
@@ -36,18 +35,22 @@ def contact_form(request, contact_form=ContactForm, template_name="lfs/contact/c
             else:
                 sku = product.get_sku()
                 if sku:
-                    sku = ' (%s)' % sku
-                subject = _('Availability of \'%(product_name)s\'%(sku)s') % dict(product_name=product.get_name(),
-                                                                                  sku=sku)
+                    sku = " (%s)" % sku
+                subject = _("Availability of '%(product_name)s'%(sku)s") % dict(
+                    product_name=product.get_name(), sku=sku
+                )
 
-        form = contact_form(initial={"name": name, "email": email, 'subject': subject})
+        form = contact_form(initial={"name": name, "email": email, "subject": subject})
 
-    return render(request, template_name, {
-        "form": form,
-    })
+    return render(
+        request,
+        template_name,
+        {
+            "form": form,
+        },
+    )
 
 
 def contact_form_sent(request, template_name="lfs/contact/contact_form_sent.html"):
-    """Displays the page after the the contact form has been sent.
-    """
+    """Displays the page after the the contact form has been sent."""
     return render(request, template_name, {})
