@@ -4,7 +4,7 @@ import datetime
 # django imports
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 # lfs imports
 import lfs.core.utils
