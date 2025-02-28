@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -7,10 +8,16 @@ from lfs.catalog.models import Product
 import lfs.customer.utils
 from lfs_contact.forms import ContactForm
 from lfs_contact.utils import send_contact_mail
+from lfs.core.utils import import_symbol
 
 
-def contact_form(request, contact_form=ContactForm, template_name="lfs/contact/contact_form.html"):
+def contact_form(request, template_name="lfs/contact/contact_form.html"):
     """Displays the contact form of LFS."""
+    if getattr(settings, "LFS_CONTACT_FORM", None):
+        contact_form = import_symbol(settings.LFS_CONTACT_FORM)
+    else:
+        contact_form = ContactForm
+
     if request.method == "POST":
         form = contact_form(data=request.POST)
         if form.is_valid():
