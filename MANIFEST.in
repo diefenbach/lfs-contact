@@ -1,3 +1,3 @@
-include README.txt
-recursive-include lfs_contact/locale *
-recursive-include lfs_contact/templates *
+include README.txt LICENSE.txt
+graft lfs_contact
+global-exclude __pycache__ *.py[co] .DS_Store
